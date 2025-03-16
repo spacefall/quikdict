@@ -9,3 +9,11 @@ var bold = color.New(color.Bold)
 
 var continueBox = dark.Sprint("├─")
 var endBox = dark.Sprint("╰─")
+
+type Mode int
+
+const (
+	ModeDictionary Mode = iota
+	ModeThesaurus
+	ModeTranslate
+)

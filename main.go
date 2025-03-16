@@ -10,21 +10,26 @@ import (
 )
 
 func main() {
-	color.NoColor = false
 	if len(os.Args) < 2 {
 		handleErrStr("no word was provided")
 	}
 
-	args := cli.Parse(os.Args[1:])
-
-	info, err := sources.GetFromDictionaryAPI(args.Word)
+	args, err := cli.Parse(os.Args[1:])
 	handleErr(err)
 
-	// Print synonyms and antonyms if thesaurus flag is set
-	if args.Thesaurus {
-		modes.PrintThesaurus(info)
-	} else {
+	switch args.Mode {
+	case modes.ModeDictionary:
+		info, err := sources.GetFromDictionaryAPI(args.Word)
+		handleErr(err)
 		modes.PrintDictionary(info)
+	case modes.ModeThesaurus:
+		info, err := sources.GetFromDictionaryAPI(args.Word)
+		handleErr(err)
+		modes.PrintThesaurus(info)
+	case modes.ModeTranslate:
+		tran, og, err := sources.Translate(args.Word, args.Translation)
+		handleErr(err)
+		modes.PrintTranslation(args.Word, tran, og, args.Translation)
 	}
 }
 

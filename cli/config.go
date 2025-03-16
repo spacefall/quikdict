@@ -3,6 +3,7 @@ package cli
 import (
 	"fmt"
 	"os"
+	"quikdict/modes"
 )
 
 var HelpStr = fmt.Sprintf(`Usage: %s [word] [options]
@@ -12,7 +13,7 @@ Options:
   -h, --help          Print this help message`, os.Args[0])
 
 type Params struct {
-	Word      string
-	Thesaurus bool
-	Translate bool
+	Word        string
+	Mode        modes.Mode
+	Translation string
 }
