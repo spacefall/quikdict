@@ -16,6 +16,8 @@ func GetFromDictionaryAPI(word string) (utils.WordInfo, error) {
 		return wordInfo, err
 	}
 
+	wordInfo.Word = word
+
 	// Get the first (and only) element of array
 	json := gjson.GetBytes(bytes, "0")
 

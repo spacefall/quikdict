@@ -13,6 +13,7 @@ type Meaning struct {
 }
 
 type WordInfo struct {
+	Word      string
 	Phonetics []string
 	Meanings  []Meaning
 	Sources   []string
