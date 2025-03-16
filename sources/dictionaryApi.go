@@ -11,7 +11,7 @@ func GetFromDictionaryAPI(word string) (utils.WordInfo, error) {
 	var wordInfo utils.WordInfo
 
 	// Get json
-	bytes, err := utils.GetHttp(apiUrl + word)
+	bytes, err := utils.GetHttp(apiUrl+word, "GET", nil, nil)
 	if err != nil {
 		return wordInfo, err
 	}
