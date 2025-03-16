@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/fatih/color"
 	"os"
+	"quikdict/cli"
 	"quikdict/sources"
 	"strings"
 )
@@ -11,6 +12,7 @@ import (
 var figureColor = color.New(color.FgHiGreen, color.Bold)
 var darkItalic = color.New(color.FgHiBlack, color.Italic)
 var dark = color.New(color.FgHiBlack)
+var bold = color.New(color.Bold)
 
 func main() {
 	color.NoColor = false
@@ -19,23 +21,26 @@ func main() {
 		handleErrStr("no word was provided")
 	}
 
-	word := os.Args[1]
+	args := cli.Parse(os.Args[1:])
 
-	info, err := sources.GetFromDictionaryAPI(word)
+	info, err := sources.GetFromDictionaryAPI(args.Word)
 	handleErr(err)
 
-	// print word in bold
-	_, _ = color.New(color.Bold).Print(word)
-
+	//goland:noinspection GoUnhandledErrorResult
+	bold.Print(args.Word)
 	// print phonetics in a dark color with brackets and the phonetics in italic
 	if len(info.Phonetics) > 0 {
-		_, _ = dark.Printf(" [%s]/n", darkItalic.Sprint(strings.Join(info.Phonetics, ", ")))
+		//goland:noinspection GoUnhandledErrorResult
+		dark.Printf(" [%s]\n", strings.Join(info.Phonetics, ", "))
+	} else {
+		fmt.Print("\n")
 	}
 
 	// print meaning
 	for _, meaning := range info.Meanings {
 		// print part of speech in green
-		_, _ = figureColor.Printf("%s\n", meaning.PartOfSpeech)
+		//goland:noinspection GoUnhandledErrorResult
+		figureColor.Printf("%s\n", meaning.PartOfSpeech)
 
 		defLen := len(meaning.Definitions)
 		for i, def := range meaning.Definitions {
@@ -44,19 +49,22 @@ func main() {
 				// print with continuing box characters if not the last definition
 				fmt.Printf(" %s %s\n", dark.Sprint("├─"), def.Definition)
 				if def.Example != "" {
-					_, _ = darkItalic.Printf(" │   ╰─ %s\n", def.Example)
+					//goland:noinspection GoUnhandledErrorResult
+					darkItalic.Printf(" │   ╰─ %s\n", def.Example)
 				}
 			} else {
 				// print with ending box characters if the last definition
 				fmt.Printf(" %s %s\n", dark.Sprint("╰─"), def.Definition)
 				if def.Example != "" {
-					_, _ = darkItalic.Printf("     ╰─ %s\n", def.Example)
+					//goland:noinspection GoUnhandledErrorResult
+					darkItalic.Printf("     ╰─ %s\n", def.Example)
 				}
 			}
 		}
 		// new line to better separate figure of speech
 		fmt.Print("\n")
 	}
+
 }
 
 func handleErrStr(err string) {
