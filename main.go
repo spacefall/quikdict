@@ -12,7 +12,6 @@ import (
 func main() {
 	color.NoColor = false
 	if len(os.Args) < 2 {
-		fmt.Printf("Usage: %s [word]", os.Args[0])
 		handleErrStr("no word was provided")
 	}
 

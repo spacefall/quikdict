@@ -1,11 +1,22 @@
 package cli
 
+import (
+	"fmt"
+	"os"
+)
+
 func Parse(args []string) Params {
 	var params Params
 	for _, arg := range args {
-		if arg == "-t" {
+		switch arg {
+		case "-th", "--thesaurus":
 			params.Thesaurus = true
-		} else {
+
+		case "-h", "--help":
+			fmt.Println(HelpStr)
+			os.Exit(0)
+
+		default:
 			params.Word = arg
 		}
 	}
