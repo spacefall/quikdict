@@ -3,6 +3,7 @@ package modes
 import (
 	"fmt"
 	"quikdict/utils"
+	"strings"
 )
 
 func PrintThesaurus(info utils.WordInfo) {
@@ -12,13 +13,11 @@ func PrintThesaurus(info utils.WordInfo) {
 		if len(meaning.Synonyms) == 0 {
 			continue
 		} else if len(meaning.Synonyms) > 0 && !printed {
-			//goland:noinspection GoUnhandledErrorResult
 			bold.Println("Synonyms")
 			printed = true
 		}
 
 		// print part of speech in green
-		//goland:noinspection GoUnhandledErrorResult
 		figureColor.Printf("%s\n", meaning.PartOfSpeech)
 
 		synLen := len(meaning.Synonyms)
@@ -26,14 +25,14 @@ func PrintThesaurus(info utils.WordInfo) {
 			// print definition
 			if i != synLen-1 {
 				// print with continuing box characters if not the last definition
-				fmt.Printf(" %s %s\n", dark.Sprint("├─"), syn)
+				fmt.Printf(" %s %s\n", continueBox, syn)
 			} else {
 				// print with ending box characters if the last definition
-				fmt.Printf(" %s %s\n", dark.Sprint("╰─"), syn)
+				fmt.Printf(" %s %s\n", endBox, syn)
 			}
 		}
 		// new line to better separate figure of speech
-		fmt.Print("\n")
+		println()
 	}
 
 	printed = false
@@ -41,7 +40,6 @@ func PrintThesaurus(info utils.WordInfo) {
 		if len(meaning.Antonyms) == 0 {
 			continue
 		} else if len(meaning.Antonyms) > 0 && !printed {
-			//goland:noinspection GoUnhandledErrorResult
 			bold.Println("Antonyms")
 			printed = true
 		}
@@ -55,13 +53,14 @@ func PrintThesaurus(info utils.WordInfo) {
 			// print definition
 			if i != antLen-1 {
 				// print with continuing box characters if not the last definition
-				fmt.Printf(" %s %s\n", dark.Sprint("├─"), ant)
+				fmt.Printf(" %s %s\n", continueBox, ant)
 			} else {
 				// print with ending box characters if the last definition
-				fmt.Printf(" %s %s\n", dark.Sprint("╰─"), ant)
+				fmt.Printf(" %s %s\n", endBox, ant)
 			}
 		}
 		// new line to better separate figure of speech
-		fmt.Print("\n")
+		println()
 	}
+	dark.Printf("Source: %s\n", strings.Join(info.Sources, ", "))
 }

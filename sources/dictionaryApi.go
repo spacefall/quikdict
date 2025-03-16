@@ -53,7 +53,7 @@ func GetFromDictionaryAPI(word string) (utils.WordInfo, error) {
 	}
 
 	// Get sources
-	for _, source := range json.Get("sources").Array() {
+	for _, source := range json.Get("sourceUrls").Array() {
 		wordInfo.Sources = append(wordInfo.Sources, source.String())
 	}
 
