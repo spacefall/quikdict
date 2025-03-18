@@ -2,6 +2,7 @@
 
 A simple go program to quickly look up (english) words and get IPA, meanings and sometimes examples, synonyms and antonyms.  
 The application can also translate a word to a different language using Google Translate.  
+It does require an online connection (no offline functionality) but it doesn't require any key/login/data to use.
 
 ## Usage
 You can find a compiled binary in the [releases](https://github.com/spacefall/quikdict/releases).  
