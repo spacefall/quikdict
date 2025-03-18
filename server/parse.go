@@ -26,10 +26,10 @@ func parseQueries(r *http.Request) (utils.Params, error) {
 	}
 
 	// Disable colors for browsers as they don't get rendered
-	if strings.Contains(r.Header.Get("User-Agent"), "Mozilla") {
-		color.NoColor = true
-	} else {
+	if strings.Contains(r.Header.Get("User-Agent"), "curl") {
 		color.NoColor = false
+	} else {
+		color.NoColor = true
 	}
 
 	params.Word = r.URL.Path[1:]

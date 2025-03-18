@@ -39,7 +39,7 @@ func Parse(args []string) (utils.Params, error) {
 			params.Word = arg
 		}
 	}
-	if params.Word == "" {
+	if params.Word == "" && !params.Host {
 		return utils.Params{}, errors.New("no word was provided")
 	}
 	return params, nil
