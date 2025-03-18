@@ -6,33 +6,34 @@ import (
 	"strings"
 )
 
-func PrintThesaurus(info utils.WordInfo, tw int) {
+func GetThesaurus(info utils.WordInfo, tw int) string {
 	printed := false
+	text := ""
 
 	for _, meaning := range info.Meanings {
 		if len(meaning.Synonyms) == 0 {
 			continue
 		} else if len(meaning.Synonyms) > 0 && !printed {
-			bold.Println("Synonyms")
+			text += bold.Sprintln("Synonyms")
 			printed = true
 		}
 
 		// print part of speech in green
-		figureColor.Printf("%s\n", meaning.PartOfSpeech)
+		text += figureColor.Sprintf("%s\n", meaning.PartOfSpeech)
 
 		synLen := len(meaning.Synonyms)
 		for i, syn := range meaning.Synonyms {
 			// print definition
 			if i != synLen-1 {
 				// print with continuing box characters if not the last definition
-				fmt.Printf(" %s %s\n", continueBox, utils.WordWrap(syn, tw-4-margin, dark.Sprint(line)))
+				text += fmt.Sprintf(" %s %s\n", continueBox, utils.WordWrap(syn, tw-4-margin, dark.Sprint(line)))
 			} else {
 				// print with ending box characters if the last definition
-				fmt.Printf(" %s %s\n", darkEndBox, utils.WordWrap(syn, tw-4-margin, s(4)))
+				text += fmt.Sprintf(" %s %s\n", darkEndBox, utils.WordWrap(syn, tw-4-margin, s(4)))
 			}
 		}
 		// new line to better separate figure of speech
-		println()
+		text += "\n"
 	}
 
 	printed = false
@@ -40,26 +41,27 @@ func PrintThesaurus(info utils.WordInfo, tw int) {
 		if len(meaning.Antonyms) == 0 {
 			continue
 		} else if len(meaning.Antonyms) > 0 && !printed {
-			bold.Println("Antonyms")
+			text += bold.Sprintln("Antonyms")
 			printed = true
 		}
 
 		// print part of speech in green
 		//goland:noinspection GoUnhandledErrorResult
-		figureColor.Printf("%s\n", meaning.PartOfSpeech)
+		text += figureColor.Sprintf("%s\n", meaning.PartOfSpeech)
 
 		antLen := len(meaning.Antonyms)
 		for i, ant := range meaning.Antonyms {
 			if i != antLen-1 {
 				// print with continuing box characters if not the last definition
-				fmt.Printf(" %s %s\n", continueBox, utils.WordWrap(ant, tw-4-margin, darkLine))
+				text += fmt.Sprintf(" %s %s\n", continueBox, utils.WordWrap(ant, tw-4-margin, darkLine))
 			} else {
 				// print with ending box characters if the last definition
-				fmt.Printf(" %s %s\n", darkEndBox, utils.WordWrap(ant, tw-4-margin, s(4)))
+				text += fmt.Sprintf(" %s %s\n", darkEndBox, utils.WordWrap(ant, tw-4-margin, s(4)))
 			}
 		}
 		// new line to better separate figure of speech
-		println()
+		text += "\n"
 	}
-	dark.Printf("Source: %s\n", strings.Join(info.Sources, ", "))
+	text += dark.Sprintf("Source: %s\n", strings.Join(info.Sources, ", "))
+	return text
 }

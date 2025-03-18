@@ -18,14 +18,6 @@ var darkLine = dark.Sprint(line)
 
 var margin = 1
 
-type Mode int
-
-const (
-	ModeDictionary Mode = iota
-	ModeThesaurus
-	ModeTranslate
-)
-
 func s(n int) string {
 	return strings.Repeat(" ", n)
 }

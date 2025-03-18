@@ -6,14 +6,10 @@ import (
 	"golang.org/x/term"
 	"os"
 	"quikdict/cli"
-	"quikdict/modes"
-	"quikdict/sources"
+	"quikdict/server"
 )
 
 func main() {
-	tw, _, err := term.GetSize(int(os.Stdin.Fd()))
-	handleErr(err)
-
 	if len(os.Args) < 2 {
 		handleErrStr("no word was provided")
 	}
@@ -21,19 +17,12 @@ func main() {
 	args, err := cli.Parse(os.Args[1:])
 	handleErr(err)
 
-	switch args.Mode {
-	case modes.ModeDictionary:
-		info, err := sources.GetFromDictionaryAPI(args.Word)
+	if args.Host {
+		handleErr(server.Host(8246))
+	} else {
+		tw, _, err := term.GetSize(int(os.Stdin.Fd()))
 		handleErr(err)
-		modes.PrintDictionary(info, tw)
-	case modes.ModeThesaurus:
-		info, err := sources.GetFromDictionaryAPI(args.Word)
-		handleErr(err)
-		modes.PrintThesaurus(info, tw)
-	case modes.ModeTranslate:
-		tran, og, err := sources.Translate(args.Word, args.Translation)
-		handleErr(err)
-		modes.PrintTranslation(args.Word, tran, og, args.Translation)
+		handleErr(cli.Print(args, tw))
 	}
 }
 

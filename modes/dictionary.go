@@ -6,19 +6,19 @@ import (
 	"strings"
 )
 
-func PrintDictionary(info utils.WordInfo, tw int) {
-	bold.Print(info.Word)
+func GetDictionary(info utils.WordInfo, tw int) string {
+	text := bold.Sprint(info.Word)
 	// print phonetics in a dark color with brackets and the phonetics in italic
 	if len(info.Phonetics) > 0 {
-		dark.Printf(" [%s]\n", strings.Join(info.Phonetics, ", "))
+		text += dark.Sprintf(" [%s]\n", strings.Join(info.Phonetics, ", "))
 	} else {
-		println()
+		text += "\n"
 	}
 
 	// print meaning
 	for _, meaning := range info.Meanings {
 		// print part of speech in green
-		figureColor.Printf("%s\n", meaning.PartOfSpeech)
+		text += figureColor.Sprintf("%s\n", meaning.PartOfSpeech)
 
 		defLen := len(meaning.Definitions)
 		for i, def := range meaning.Definitions {
@@ -26,21 +26,22 @@ func PrintDictionary(info utils.WordInfo, tw int) {
 			// print definition
 			if i != defLen-1 {
 				// print with continuing box characters if not the last definition
-				fmt.Printf(" %s %s\n", continueBox, utils.WordWrap(def.Definition, tw-4-margin, darkLine))
+				text += fmt.Sprintf(" %s %s\n", continueBox, utils.WordWrap(def.Definition, tw-4-margin, darkLine))
 				if def.Example != "" {
-					darkItalic.Printf("%s %s %s\n", line, endBox, utils.WordWrap(def.Example, tw-8-margin, line+s(4)))
+					text += darkItalic.Sprintf("%s %s %s\n", line, endBox, utils.WordWrap(def.Example, tw-8-margin, line+s(4)))
 				}
 
 			} else {
 				// print with ending box characters if the last definition
-				fmt.Printf(" %s %s\n", darkEndBox, utils.WordWrap(def.Definition, tw-4-margin, s(4)))
+				text += fmt.Sprintf(" %s %s\n", darkEndBox, utils.WordWrap(def.Definition, tw-4-margin, s(4)))
 				if def.Example != "" {
-					darkItalic.Printf("%s%s %s\n", s(5), endBox, utils.WordWrap(def.Example, tw-8-margin, s(8)))
+					text += darkItalic.Sprintf("%s%s %s\n", s(5), endBox, utils.WordWrap(def.Example, tw-8-margin, s(8)))
 				}
 			}
 		}
 		// new line to better separate figure of speech
-		println()
+		text += "\n"
 	}
-	dark.Printf("Source: %s\n", strings.Join(info.Sources, ", "))
+	text += dark.Sprintf("Source: %s\n", strings.Join(info.Sources, ", "))
+	return text
 }

@@ -4,13 +4,12 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	"quikdict/modes"
 	"quikdict/utils"
 )
 
-func Parse(args []string) (Params, error) {
-	var params Params
-	params.Mode = modes.ModeDictionary
+func Parse(args []string) (utils.Params, error) {
+	var params utils.Params
+	params.Mode = utils.ModeDictionary
 	skip := false
 	for i, arg := range args {
 		if skip {
@@ -20,22 +19,28 @@ func Parse(args []string) (Params, error) {
 		switch arg {
 		case "-tr", "--translate":
 			if len(args) == i+1 || len(args[i+1]) != 2 || !utils.IsLetter(args[i+1]) {
-				return Params{}, errors.New("invalid language code")
+				return utils.Params{}, errors.New("invalid language code")
 			}
 			params.Translation = args[i+1]
-			params.Mode = modes.ModeTranslate
+			params.Mode = utils.ModeTranslate
 			skip = true
 
 		case "-th", "--thesaurus":
-			params.Mode = modes.ModeThesaurus
+			params.Mode = utils.ModeThesaurus
 
 		case "-h", "--help":
 			fmt.Println(HelpStr)
 			os.Exit(0)
 
+		case "-s", "--serve":
+			params.Host = true
+
 		default:
 			params.Word = arg
 		}
+	}
+	if params.Word == "" {
+		return utils.Params{}, errors.New("no word was provided")
 	}
 	return params, nil
 }

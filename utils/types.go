@@ -18,3 +18,18 @@ type WordInfo struct {
 	Meanings  []Meaning
 	Sources   []string
 }
+
+type Params struct {
+	Word        string
+	Mode        Mode
+	Translation string
+	Host        bool
+}
+
+type Mode int
+
+const (
+	ModeDictionary Mode = iota
+	ModeThesaurus
+	ModeTranslate
+)
