@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/fatih/color"
+	"golang.org/x/term"
 	"os"
 	"quikdict/cli"
 	"quikdict/modes"
@@ -10,6 +11,9 @@ import (
 )
 
 func main() {
+	tw, _, err := term.GetSize(int(os.Stdin.Fd()))
+	handleErr(err)
+
 	if len(os.Args) < 2 {
 		handleErrStr("no word was provided")
 	}
@@ -21,11 +25,11 @@ func main() {
 	case modes.ModeDictionary:
 		info, err := sources.GetFromDictionaryAPI(args.Word)
 		handleErr(err)
-		modes.PrintDictionary(info)
+		modes.PrintDictionary(info, tw)
 	case modes.ModeThesaurus:
 		info, err := sources.GetFromDictionaryAPI(args.Word)
 		handleErr(err)
-		modes.PrintThesaurus(info)
+		modes.PrintThesaurus(info, tw)
 	case modes.ModeTranslate:
 		tran, og, err := sources.Translate(args.Word, args.Translation)
 		handleErr(err)

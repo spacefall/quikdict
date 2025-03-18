@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func PrintThesaurus(info utils.WordInfo) {
+func PrintThesaurus(info utils.WordInfo, tw int) {
 	printed := false
 
 	for _, meaning := range info.Meanings {
@@ -25,10 +25,10 @@ func PrintThesaurus(info utils.WordInfo) {
 			// print definition
 			if i != synLen-1 {
 				// print with continuing box characters if not the last definition
-				fmt.Printf(" %s %s\n", continueBox, syn)
+				fmt.Printf(" %s %s\n", continueBox, utils.WordWrap(syn, tw-4-margin, dark.Sprint(line)))
 			} else {
 				// print with ending box characters if the last definition
-				fmt.Printf(" %s %s\n", endBox, syn)
+				fmt.Printf(" %s %s\n", darkEndBox, utils.WordWrap(syn, tw-4-margin, s(4)))
 			}
 		}
 		// new line to better separate figure of speech
@@ -50,13 +50,12 @@ func PrintThesaurus(info utils.WordInfo) {
 
 		antLen := len(meaning.Antonyms)
 		for i, ant := range meaning.Antonyms {
-			// print definition
 			if i != antLen-1 {
 				// print with continuing box characters if not the last definition
-				fmt.Printf(" %s %s\n", continueBox, ant)
+				fmt.Printf(" %s %s\n", continueBox, utils.WordWrap(ant, tw-4-margin, darkLine))
 			} else {
 				// print with ending box characters if the last definition
-				fmt.Printf(" %s %s\n", endBox, ant)
+				fmt.Printf(" %s %s\n", darkEndBox, utils.WordWrap(ant, tw-4-margin, s(4)))
 			}
 		}
 		// new line to better separate figure of speech
