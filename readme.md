@@ -31,6 +31,8 @@ You can also run the application as a server by running:
 ```bash
 ./quickdict -s
 ```
+An active deployment can be found [here](https://quikdict.onrender.com/).
+
 This will start a server on `localhost:8246` that you can query with a browser or curl.
 Using the server, you won't get colored output unless you use curl, but the output will be the same as the terminal app. The only thing that changes is the query parameters.
 
