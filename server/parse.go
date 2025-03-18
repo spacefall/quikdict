@@ -2,8 +2,10 @@ package server
 
 import (
 	"errors"
+	"github.com/fatih/color"
 	"net/http"
 	"quikdict/utils"
+	"strings"
 )
 
 func parseQueries(r *http.Request) (utils.Params, error) {
@@ -23,8 +25,14 @@ func parseQueries(r *http.Request) (utils.Params, error) {
 		params.Translation = lc
 	}
 
+	// Disable colors for browsers as they don't get rendered
+	if strings.Contains(r.Header.Get("User-Agent"), "Mozilla") {
+		color.NoColor = true
+	} else {
+		color.NoColor = false
+	}
+
 	params.Word = r.URL.Path[1:]
-	print(params.Word)
 	if params.Word == "" {
 		return utils.Params{}, errors.New("no word was provided")
 	}

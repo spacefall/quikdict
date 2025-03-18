@@ -26,14 +26,14 @@ func GetDictionary(info utils.WordInfo, tw int) string {
 			// print definition
 			if i != defLen-1 {
 				// print with continuing box characters if not the last definition
-				text += fmt.Sprintf(" %s %s\n", continueBox, utils.WordWrap(def.Definition, tw-4-margin, darkLine))
+				text += fmt.Sprintf(" %s %s\n", dark.Sprint(continueBox), utils.WordWrap(def.Definition, tw-4-margin, dark.Sprint(line)))
 				if def.Example != "" {
 					text += darkItalic.Sprintf("%s %s %s\n", line, endBox, utils.WordWrap(def.Example, tw-8-margin, line+s(4)))
 				}
 
 			} else {
 				// print with ending box characters if the last definition
-				text += fmt.Sprintf(" %s %s\n", darkEndBox, utils.WordWrap(def.Definition, tw-4-margin, s(4)))
+				text += fmt.Sprintf(" %s %s\n", dark.Sprint(endBox), utils.WordWrap(def.Definition, tw-4-margin, s(4)))
 				if def.Example != "" {
 					text += darkItalic.Sprintf("%s%s %s\n", s(5), endBox, utils.WordWrap(def.Example, tw-8-margin, s(8)))
 				}

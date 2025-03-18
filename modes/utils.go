@@ -12,9 +12,7 @@ var bold = color.New(color.Bold)
 
 var endBox = "╰─"
 var line = " │  "
-var continueBox = dark.Sprint("├─")
-var darkEndBox = dark.Sprint(endBox)
-var darkLine = dark.Sprint(line)
+var continueBox = "├─"
 
 var margin = 1
 

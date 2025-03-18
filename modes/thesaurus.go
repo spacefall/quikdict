@@ -26,10 +26,10 @@ func GetThesaurus(info utils.WordInfo, tw int) string {
 			// print definition
 			if i != synLen-1 {
 				// print with continuing box characters if not the last definition
-				text += fmt.Sprintf(" %s %s\n", continueBox, utils.WordWrap(syn, tw-4-margin, dark.Sprint(line)))
+				text += fmt.Sprintf(" %s %s\n", dark.Sprint(continueBox), utils.WordWrap(syn, tw-4-margin, dark.Sprint(line)))
 			} else {
 				// print with ending box characters if the last definition
-				text += fmt.Sprintf(" %s %s\n", darkEndBox, utils.WordWrap(syn, tw-4-margin, s(4)))
+				text += fmt.Sprintf(" %s %s\n", dark.Sprint(endBox), utils.WordWrap(syn, tw-4-margin, s(4)))
 			}
 		}
 		// new line to better separate figure of speech
@@ -53,10 +53,10 @@ func GetThesaurus(info utils.WordInfo, tw int) string {
 		for i, ant := range meaning.Antonyms {
 			if i != antLen-1 {
 				// print with continuing box characters if not the last definition
-				text += fmt.Sprintf(" %s %s\n", continueBox, utils.WordWrap(ant, tw-4-margin, darkLine))
+				text += fmt.Sprintf(" %s %s\n", dark.Sprint(continueBox), utils.WordWrap(ant, tw-4-margin, dark.Sprint(line)))
 			} else {
 				// print with ending box characters if the last definition
-				text += fmt.Sprintf(" %s %s\n", darkEndBox, utils.WordWrap(ant, tw-4-margin, s(4)))
+				text += fmt.Sprintf(" %s %s\n", dark.Sprint(endBox), utils.WordWrap(ant, tw-4-margin, s(4)))
 			}
 		}
 		// new line to better separate figure of speech
